@@ -118,4 +118,4 @@ Bingo仿照Mysql数据库实现了简易的数据存储系统，不同于实验�
 目前管理员的功能还未完善
 
 ---
-*authors：[@0125nia](https://github.com/0125nia) , @mignon*
+*authors：[@0125nia](https://github.com/0125nia) , [@mignon](https://github.com/Mignonfun)*
