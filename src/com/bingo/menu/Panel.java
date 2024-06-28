@@ -38,7 +38,10 @@ public class Panel {
                     }
                 }
                 case 2 -> Start.register();
-                case 3 -> System.exit(1);
+                case 3 ->{
+                    InputUtil.close();
+                    System.exit(1);
+                }
             }
         }
     }

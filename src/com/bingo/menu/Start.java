@@ -52,8 +52,7 @@ public class Start {
             }
         }
 
-        String name = inputName(roleType);
-        String account = InputUtil.inputString("请输入账号：");
+        String account = InputUtil.inputString("请输入用户名：");
         String pwd;
         while (true) {
             pwd = InputUtil.inputString("请输入密码：");
@@ -64,19 +63,8 @@ public class Start {
             System.out.println("两次输入的密码不同，请重新输入");
         }
 
-        ResultVO<User> resultVO = AccountService.registerUser(name, account, pwd, roleType);
+        ResultVO<User> resultVO = AccountService.registerUser(account, pwd, roleType);
         System.out.println(resultVO.getMsg());
     }
 
-    private static String inputName(RoleType roleType) {
-        String str;
-        if (roleType == RoleType.PURCHASER){
-            str = "用户名";
-        }else if (roleType == RoleType.MERCHANT){
-            str = "店铺名";
-        }else {
-            return null;
-        }
-        return InputUtil.inputString("请输入您的"+str+"：");
-    }
 }
