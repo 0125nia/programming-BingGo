@@ -15,5 +15,6 @@ public class CollConstants {
     public static final List<String> PURCHASER = Arrays.asList("查看商品", "购物车", "互动中心", "个人界面", "退出登录");
     public static final List<String> MERCHANT = Arrays.asList("上架商品", "活动", "消息", "商家界面", "退出登录");
     public static final List<String> ADMIN = Arrays.asList("用户管理", "商家管理", "商品管理", "活动管理", "消息", "退出登录");
+    public static final List<String> INTERACTION = Arrays.asList("查看活动", "关注用户", "关注商家","用户反馈", "退出");
 
 }

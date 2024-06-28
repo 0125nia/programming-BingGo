@@ -16,4 +16,5 @@ public class BingoConstants {
     public static final String FOLLOWING = "我的关注";
 
 
+    public static final String ADDRESS = "收货地址";
 }
