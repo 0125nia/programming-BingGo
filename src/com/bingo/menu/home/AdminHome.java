@@ -53,8 +53,14 @@ public class AdminHome {
             return;
         }
         activities.forEach(activity -> System.out.println(activity.toString()));
-        //todo 添加删除活动逻辑
-        System.out.println("");
+
+        if ("y".equalsIgnoreCase(InputUtil.inputString("是否新增活动(y)"))){
+            String name = InputUtil.inputString("请输入新增的活动名称：");
+            String desc = InputUtil.inputString("请输入活动描述：");
+            Activity activity = new Activity(name,desc);
+            DBUtils.insertActivity(activity);
+            System.out.println("新增活动成功");
+        }
     }
 
     /**
