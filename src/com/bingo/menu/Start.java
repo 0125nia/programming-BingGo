@@ -34,6 +34,7 @@ public class Start {
         String account = InputUtil.inputString("请输入账号：");
         String pwd = InputUtil.inputString("请输入密码：");
         ResultVO<Role> resultVO = AccountService.login(account, pwd, roleType);
+        System.out.println(resultVO.getMsg());
         return (ResultVO<T>) resultVO;
     }
 

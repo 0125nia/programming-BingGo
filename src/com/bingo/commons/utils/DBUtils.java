@@ -90,6 +90,9 @@ public class DBUtils {
         Table message = getTable("message");
         List<String> arrayList = new ArrayList<>();
         LinkedList<LinkedList<String>> allByCSV = message.getAllByCSV();
+        if (allByCSV == null){
+            return new ArrayList<>();
+        }
         for (LinkedList<String> list : allByCSV) {
             String s = list.get(0) + ":" + list.get(1);
             arrayList.add(s);
@@ -101,6 +104,9 @@ public class DBUtils {
         Table table = getTable("merchants");
         List<Merchant> arrayList = new ArrayList<>();
         LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        if (allByCSV == null){
+            return new ArrayList<>();
+        }
         for (LinkedList<String> list : allByCSV) {
             arrayList.add(TransformUtils.list2Merchant(list));
         }
@@ -111,6 +117,9 @@ public class DBUtils {
         Table table = getTable("purchaser");
         List<Purchaser> arrayList = new ArrayList<>();
         LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        if (allByCSV == null){
+            return new ArrayList<>();
+        }
         for (LinkedList<String> list : allByCSV) {
             arrayList.add(TransformUtils.list2Purchaser(list));
         }
@@ -120,6 +129,9 @@ public class DBUtils {
     public static List<Goods> getAllGoods() {
         Table table = getTable("goods");
         LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        if (allByCSV == null){
+            return new ArrayList<>();
+        }
         return TransformUtils.list2GoodsList(allByCSV);
     }
 
@@ -127,6 +139,9 @@ public class DBUtils {
         Table table = getTable("activity");
         List<Activity> arrayList = new ArrayList<>();
         LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        if (allByCSV == null){
+            return new ArrayList<>();
+        }
         for (LinkedList<String> list : allByCSV) {
             arrayList.add(TransformUtils.list2Activity(list));
         }
