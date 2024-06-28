@@ -1,6 +1,6 @@
 package com.bingo.business.account;
 
-import com.bingo.business.management.Platform;
+import com.bingo.business.Platform;
 import com.bingo.commons.enums.ResponseType;
 import com.bingo.commons.enums.RoleType;
 import com.bingo.commons.pojo.identity.*;
@@ -46,14 +46,13 @@ public class AccountService {
     }
 
     //User注册逻辑
-    public static  <T extends User> ResultVO<T> registerUser(String name,String account, String pwd,RoleType roleType){
+    public static  <T extends User> ResultVO<T> registerUser(String account, String pwd,RoleType roleType){
         T user = platform.createRole(roleType);
         if (roleType == RoleType.PURCHASER){
             Purchaser purchaser= (Purchaser) user;
-            purchaser.setPId(DBUtils.getIncreaseId());
+            purchaser.setPId(DBUtils.getIncreaseId("id.txt"));
             purchaser.setAccount(account);
             purchaser.setPwd(pwd);
-            purchaser.setName(name);
             purchaser.setBalance(0.0);
             purchaser.setAddresses("无地址");
             purchaser.setCreateTime(GlobalFormatUtil.getNowDateString());
@@ -61,10 +60,9 @@ public class AccountService {
             DBUtils.insertPurchaser(purchaser);
         }else if (roleType == RoleType.MERCHANT){
             Merchant merchant= (Merchant) user;
-            merchant.setMId(DBUtils.getIncreaseId());
+            merchant.setMId(DBUtils.getIncreaseId("id.txt"));
             merchant.setAccount(account);
             merchant.setPwd(pwd);
-            merchant.setName(name);
             merchant.setIncome(0.0);
             merchant.setFollowers(0);
             merchant.setCreateTime(GlobalFormatUtil.getNowDateString());
@@ -77,7 +75,7 @@ public class AccountService {
     //admin注册逻辑
     public static <T extends Admin> ResultVO<T> registerAdmin(String account, String pwd,RoleType roleType){
         PlatformAdmin admin = platform.createRole(roleType);
-        admin.setAId(DBUtils.getIncreaseId());
+        admin.setAId(DBUtils.getIncreaseId("id.txt"));
         admin.setAccount(account);
         admin.setPwd(pwd);
         DBUtils.insertAdmin(admin);

@@ -42,6 +42,11 @@ public class Activity {
         this.name = name;
         this.desc = desc;
     }
+    public Activity(String name, String desc) {
+        this.code = "1";
+        this.name = name;
+        this.desc = desc;
+    }
 
     @Override
     public String toString() {
