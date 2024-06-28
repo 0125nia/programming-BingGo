@@ -224,7 +224,7 @@ public class Table {
     }
 
     //    根据csv文件拿到所有数据
-    public LinkedList<LinkedList<String>> getAllByCSV() throws IOException {
+    public LinkedList<LinkedList<String>> getAllByCSV(){
         if(!filp.exist(path+"\\data.csv"))return null;
         LinkedList<LinkedList<String>> linkedLists = filp.readCsv(path + "\\data.csv");
 //        存在，那么：
