@@ -6,6 +6,7 @@ import com.bingo.commons.pojo.Goods;
 import com.bingo.commons.pojo.identity.*;
 import com.bingo.data.MyDB;
 import com.bingo.data.bpFileTree.Table;
+import com.bingo.data.graph.RelaSchema;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -61,57 +62,76 @@ public class DBUtils {
     public static Purchaser getPurchaser(String account){
         Table table = getTable("purchaser");
         LinkedList<String> linkedList = table.findByIdx(1, account);
+        if (linkedList == null || linkedList.isEmpty()){
+            return null;
+        }
         return TransformUtils.list2Purchaser(linkedList);
     }
 
     public static Merchant getMerchant(String account){
         Table table = getTable("merchant");
         LinkedList<String> linkedList = table.findByIdx(1, account);
+        if (linkedList == null || linkedList.isEmpty()){
+            return null;
+        }
         return TransformUtils.list2Merchant(linkedList);
     }
 
-    public static void insertMessages(String message){
-        String substring = message.substring(0, message.indexOf(":"));
+    public static void insertMessages(String message, Purchaser user){
         Table table = getTable("message");
         table.createIndex(0);
         LinkedList<String> list = new LinkedList<>();
-        list.add(substring);
+        list.add(user.getAccount());
         list.add(message);
         table.insert(list);
     }
 
     public static List<String> getAdminMessages() {
         Table message = getTable("message");
-
-        return null;
+        List<String> arrayList = new ArrayList<>();
+        LinkedList<LinkedList<String>> allByCSV = message.getAllByCSV();
+        for (LinkedList<String> list : allByCSV) {
+            String s = list.get(0) + ":" + list.get(1);
+            arrayList.add(s);
+        }
+        return arrayList;
     }
 
     public static List<Merchant> getAllMerchants() {
-        return null;
+        Table table = getTable("merchants");
+        List<Merchant> arrayList = new ArrayList<>();
+        LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        for (LinkedList<String> list : allByCSV) {
+            arrayList.add(TransformUtils.list2Merchant(list));
+        }
+        return arrayList;
     }
 
     public static List<Purchaser> getAllPurchasers() {
-        return null;
+        Table table = getTable("purchaser");
+        List<Purchaser> arrayList = new ArrayList<>();
+        LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        for (LinkedList<String> list : allByCSV) {
+            arrayList.add(TransformUtils.list2Purchaser(list));
+        }
+        return arrayList;
     }
 
     public static List<Goods> getAllGoods() {
-        return null;
+        Table table = getTable("goods");
+        LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        return TransformUtils.list2GoodsList(allByCSV);
     }
 
     public static List<Activity> getActivities() {
-        return null;
+        Table table = getTable("activity");
+        List<Activity> arrayList = new ArrayList<>();
+        LinkedList<LinkedList<String>> allByCSV = table.getAllByCSV();
+        for (LinkedList<String> list : allByCSV) {
+            arrayList.add(TransformUtils.list2Activity(list));
+        }
+        return arrayList;
     }
-
-
-    //todo 完善关注与粉丝逻辑
-    public static Integer getFollowers(String pId){
-        return 0;
-    }
-
-    public static Integer getFollowings(String pId) {
-        return 0;
-    }
-
 
     private static Table getTable(String name) {
         MyDB myDB = new MyDB(root);
@@ -163,8 +183,6 @@ public class DBUtils {
         LinkedList<String> list = TransformUtils.goods2List(goods);
         table.insert(list);
     }
-
-
     public static void updatePurchaser(Purchaser user) {
         Table purchaser = getTable("purchaser");
         LinkedList<String> list = TransformUtils.purchaser2LinkedList(user);
@@ -176,8 +194,8 @@ public class DBUtils {
         linkedList.remove(gId);
         goods.updateByFristIdx(linkedList);
     }
-    public static String getIncreaseId(){
-        String fileName = "myDB\\id.txt";
+    public static String getIncreaseId(String filename){
+        String fileName = "myDB\\"+ filename;
         int id = 1;
         try{
             File file = new File(fileName);
@@ -199,5 +217,54 @@ public class DBUtils {
         return dataFormat(Integer.toString(id));
     }
 
+    public static Integer getFollowersNum(String pId){
+        RelaSchema userFollow = getRelaSchema("userFollower");
+        return userFollow.getEdgeNum(pId);
+    }
 
+    public static Integer getFollowingsNum(String pId) {
+        RelaSchema userFollowing = getRelaSchema("userFollowing");
+        return userFollowing.getEdgeNum(pId);
+    }
+
+    /**
+     * 获取用户关注列表
+     */
+    public static LinkedList<String> getFollowers(String pId) {
+        RelaSchema userFollower = getRelaSchema("userFollower");
+        return userFollower.getAllEdge(pId);
+    }
+
+    public static LinkedList<String> getFollowings(String pId) {
+        RelaSchema userFollower = getRelaSchema("userFollowing");
+        return userFollower.getAllEdge(pId);
+    }
+
+    public static void insertActivity(Activity activity) {
+        Table table = getTable("activity");
+        table.createIndex(0);
+        LinkedList<String> list = new LinkedList<>();
+        list.add(activity.getCode());
+        list.add(activity.getName());
+        list.add(activity.getDesc());
+        table.insert(list);
+    }
+
+    public static void insertFollowers(Purchaser purchaser, Purchaser purchaser1,String name) {
+        RelaSchema relaSchema = getRelaSchema(name);
+        relaSchema.addNode(Integer.parseInt(purchaser.getPId()),purchaser.getAccount());
+        relaSchema.addNode(Integer.parseInt(purchaser1.getPId()),purchaser1.getAccount());
+        relaSchema.addEdge(purchaser.getAccount(),purchaser1.getAccount());
+    }
+
+    public static List<Goods> getGoodsBymid(String mId) {
+        Table goods = getTable("goods");
+//        goods.findByIdx(0,mId);
+        return new ArrayList<>();
+    }
+
+    public static RelaSchema getRelaSchema(String name){
+        MyDB db = new MyDB(root);
+        return db.createRelaSchema(name);
+    }
 }
