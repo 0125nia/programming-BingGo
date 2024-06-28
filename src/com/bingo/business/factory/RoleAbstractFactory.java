@@ -1,4 +1,4 @@
-package com.bingo.business.management.factory;
+package com.bingo.business.factory;
 
 import com.bingo.commons.enums.RoleType;
 import com.bingo.commons.pojo.identity.Role;

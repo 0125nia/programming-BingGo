@@ -1,4 +1,4 @@
-package com.bingo.business.management.strategy;
+package com.bingo.business.strategy;
 
 /**
  * @author nia

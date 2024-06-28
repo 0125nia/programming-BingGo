@@ -1,7 +1,7 @@
 package com.bingo.commons.enums;
 
-import com.bingo.business.management.strategy.DefaultPaymentStrategy;
-import com.bingo.business.management.strategy.PaymentStrategy;
+import com.bingo.business.strategy.DefaultPaymentStrategy;
+import com.bingo.business.strategy.PaymentStrategy;
 
 /**
  * @author nia

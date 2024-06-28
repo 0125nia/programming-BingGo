@@ -1,8 +1,7 @@
-package com.bingo.business.management;
+package com.bingo.business;
 
-import com.bingo.business.management.factory.RoleFactory;
-import com.bingo.business.management.strategy.PaymentContext;
-import com.bingo.business.management.strategy.PaymentStrategy;
+import com.bingo.business.factory.RoleFactory;
+import com.bingo.business.strategy.PaymentContext;
 import com.bingo.commons.enums.ActivityType;
 import com.bingo.commons.enums.RoleType;
 import com.bingo.commons.pojo.identity.Role;
