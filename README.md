@@ -33,7 +33,7 @@
 
 首先我们的项目是一个电商管理系统，电商管理系统中必不可少的莫过于用户，商家，管理员三个身份：
 
-##### [用户](src/com/bingo/commons/pojo/identity/User.java)
+##### [用户](src/com/bingo/commons/pojo/identity/Purchaser.java)
 
 在电商系统中，用户的行为即登录、注册、加入购物车
 
@@ -51,13 +51,13 @@
 
 > 我们采用了多种设计模式来解决特定的设计问题，同时确保了代码的可维护性和可扩展性。
 
-##### [工厂模式](src/com/bingo/business/management/factory)
+##### [工厂模式](src/com/bingo/business/factory)
 
 > 采用了工厂模式来创建用户和商家对象，这不仅简化了对象的创建过程，还提高了代码的可维护性
 
 工厂模式允许我们通过一个共同的接口来创建不同类型的对象，而无需指定具体类。这简化了对象创建过程，使得新增对象类型时，只需添加相应的具体类和工厂类，无需修改现有代码，从而提高了代码的可维护性和可扩展性。
 
-##### [策略模式](src/com/bingo/business/management/strategy)
+##### [策略模式](src/com/bingo/business/strategy)
 
 > 利用策略模式来管理用户付款时的不同策略，使得支付方式可以轻松切换，而无需修改现有代码。
 
